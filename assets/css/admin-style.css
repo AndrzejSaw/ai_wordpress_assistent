@@ -1,0 +1,754 @@
+/**
+ * AI Assistant Admin Styles
+ * Стили для админ-панели плагина
+ */
+
+/* Основные стили для страницы настроек */
+.ai-assistant-settings {
+    max-width: 800px;
+}
+
+.ai-assistant-settings .wrap {
+    margin-right: 20px;
+}
+
+/* Заголовок плагина */
+.ai-assistant-header {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ai-assistant-header h2 {
+    margin-top: 0;
+    color: #23282d;
+    font-size: 1.3em;
+}
+
+.ai-assistant-header p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 0;
+}
+
+/* Стили для валидации полей в модальном окне */
+.ai-assistant-field-good {
+    border-color: #46b450 !important;
+    box-shadow: 0 0 0 1px #46b450 !important;
+}
+
+.ai-assistant-field-warning {
+    border-color: #ffb900 !important;
+    box-shadow: 0 0 0 1px #ffb900 !important;
+}
+
+.ai-assistant-field-error {
+    border-color: #dc3232 !important;
+    box-shadow: 0 0 0 1px #dc3232 !important;
+}
+
+/* Улучшенные подсказки для полей */
+.ai-assistant-field-hint {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.ai-assistant-field-good + .ai-assistant-field-hint {
+    color: #46b450;
+}
+
+.ai-assistant-field-warning + .ai-assistant-field-hint {
+    color: #ffb900;
+}
+
+.ai-assistant-field-error + .ai-assistant-field-hint {
+    color: #dc3232;
+}
+
+/* Индикаторы длины текста */
+#title-length, #description-length {
+    font-weight: bold;
+}
+
+/* Стили для полей формы */
+.ai-assistant-settings .form-table {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ai-assistant-settings .form-table th {
+    background: #f9f9f9;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 15px 20px;
+    font-weight: 600;
+}
+
+.ai-assistant-settings .form-table td {
+    padding: 15px 20px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.ai-assistant-settings .form-table tr:last-child td,
+.ai-assistant-settings .form-table tr:last-child th {
+    border-bottom: none;
+}
+
+/* Стили для API ключа */
+#ai_assistant_api_key {
+    width: 300px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    transition: border-color 0.3s ease;
+}
+
+#ai_assistant_api_key:focus {
+    border-color: #0073aa;
+    box-shadow: 0 0 0 1px #0073aa;
+    outline: none;
+}
+
+/* Кнопки */
+.ai-assistant-settings .button {
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+#toggle-api-key,
+#test-api-key {
+    margin-left: 10px;
+    vertical-align: top;
+}
+
+#test-api-key {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+#test-api-key:hover {
+    background: #005a87;
+    border-color: #005a87;
+}
+
+#test-api-key:disabled {
+    background: #ccc !important;
+    border-color: #ccc !important;
+    cursor: not-allowed;
+}
+
+/* Результат тестирования API */
+#api-test-result {
+    margin-top: 15px;
+}
+
+#api-test-result .notice {
+    margin: 0;
+    border-radius: 4px;
+}
+
+/* Информационный блок */
+.ai-assistant-info {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 4px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.ai-assistant-info h3 {
+    margin-top: 0;
+    color: #23282d;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.ai-assistant-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ai-assistant-info li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ai-assistant-info li:last-child {
+    border-bottom: none;
+}
+
+/* Описания и подсказки */
+.description {
+    color: #666;
+    font-style: italic;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+/* Индикатор сохранения */
+#api-save-indicator {
+    color: #0073aa;
+    font-size: 12px;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Подсказка для API ключа */
+#api-key-hint {
+    background: #f0f6fc;
+    border: 1px solid #0073aa;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #0073aa;
+}
+
+/* Уведомления */
+.ai-assistant-settings .notice {
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+.notice-success {
+    border-left-color: #46b450;
+}
+
+.notice-error {
+    border-left-color: #dc3232;
+}
+
+.notice-info {
+    border-left-color: #00a0d2;
+}
+
+/* Стили для уведомления в модальном окне */
+.ai-assistant-modal-notice {
+    background: #e7f3ff;
+    border: 1px solid #0073aa;
+    border-radius: 4px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #0073aa;
+    font-weight: 500;
+}
+
+/* Адаптивность */
+@media screen and (max-width: 782px) {
+    .ai-assistant-settings {
+        margin-right: 0;
+    }
+    
+    #ai_assistant_api_key {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    #toggle-api-key,
+    #test-api-key {
+        margin-left: 0;
+        margin-top: 10px;
+        display: block;
+    }
+    
+    .ai-assistant-settings .form-table th,
+    .ai-assistant-settings .form-table td {
+        padding: 10px 15px;
+    }
+    
+    .ai-assistant-header,
+    .ai-assistant-info {
+        padding: 15px;
+    }
+}
+
+/* Анимации загрузки */
+.ai-assistant-loading {
+    position: relative;
+}
+
+.ai-assistant-loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #0073aa;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Стили для копирования в буфер */
+.copy-to-clipboard {
+    cursor: pointer;
+    color: #0073aa;
+    text-decoration: underline;
+}
+
+.copy-to-clipboard:hover {
+    color: #005a87;
+}
+
+/* Статус индикаторы */
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-active {
+    background-color: #46b450;
+}
+
+.status-inactive {
+    background-color: #dc3232;
+}
+
+.status-warning {
+    background-color: #ffb900;
+}
+
+/* Улучшенные стили для списков */
+.ai-assistant-info ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Дополнительные стили для будущих функций */
+.ai-assistant-preview {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 15px 0;
+    font-family: monospace;
+    font-size: 13px;
+}
+
+.ai-assistant-progress {
+    width: 100%;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.ai-assistant-progress-bar {
+    height: 100%;
+    background: linear-gradient(45deg, #0073aa, #00a0d2);
+    transition: width 0.3s ease;
+}
+
+/* Темная тема (для будущего использования) */
+@media (prefers-color-scheme: dark) {
+    .ai-assistant-settings .form-table,
+    .ai-assistant-header,
+    .ai-assistant-info {
+        background: #1e1e1e;
+        border-color: #444;
+        color: #e0e0e0;
+    }
+    
+    .ai-assistant-header h2,
+    .ai-assistant-info h3 {
+        color: #e0e0e0;
+    }
+    
+    #ai_assistant_api_key {
+        background: #2d2d2d;
+        border-color: #555;
+        color: #e0e0e0;
+    }
+}
+
+/* Стили для колонки AI Assistant в списках записей */
+.column-ai_assistant {
+    width: 120px !important;
+}
+
+.generate-seo-btn {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    padding: 4px 8px !important;
+    white-space: nowrap;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+}
+
+.generate-seo-btn:hover {
+    background-color: #0073aa !important;
+    border-color: #0073aa !important;
+    color: #fff !important;
+}
+
+.generate-seo-btn .dashicons {
+    font-size: 12px;
+    line-height: 1;
+    vertical-align: middle;
+    margin-right: 3px;
+}
+
+.ai-assistant-loading {
+    display: flex;
+    align-items: center;
+    font-size: 11px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.ai-assistant-loading .spinner {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxjaXJjbGUgY3g9IjEwIiBjeT0iMTAiIHI9IjgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzAwNzNhYSIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtZGFzaGFycmF5PSI1LDUiLz4KPC9zdmc+);
+    background-size: 16px 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+}
+
+.ai-assistant-optimized {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    white-space: nowrap;
+    color: #46b450;
+    font-weight: 500;
+}
+
+.ai-assistant-optimized .dashicons {
+    font-size: 14px;
+    margin-right: 5px;
+}
+
+/* Улучшения для мобильных устройств */
+@media screen and (max-width: 782px) {
+    .column-ai_assistant {
+        width: auto !important;
+    }
+    
+    .generate-seo-btn {
+        font-size: 12px !important;
+        padding: 6px 10px !important;
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .ai-assistant-loading,
+    .ai-assistant-optimized {
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* Анимация для кнопки генерации */
+@keyframes generatePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.generate-seo-btn:active {
+    animation: generatePulse 0.3s ease;
+}
+
+/* Стили для уведомлений */
+.notice.ai-assistant-notification {
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left-width: 4px;
+}
+
+.notice.ai-assistant-notification.notice-success {
+    border-left-color: #46b450;
+    background-color: #f0fff4;
+}
+
+.notice.ai-assistant-notification.notice-error {
+    border-left-color: #dc3232;
+    background-color: #fff5f5;
+}
+
+.notice.ai-assistant-notification p {
+    margin: 8px 0;
+    font-weight: 500;
+}
+
+/* Стили для модального окна SEO-данных */
+.ai-assistant-modal {
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.ai-assistant-modal-content {
+    position: relative;
+    background-color: #fff;
+    margin: 5% auto;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.ai-assistant-modal-header {
+    background: #0073aa;
+    color: #fff;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-assistant-modal-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.ai-assistant-modal-close {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.ai-assistant-modal-close:hover {
+    color: #fff;
+}
+
+.ai-assistant-modal-body {
+    padding: 25px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.ai-assistant-modal-footer {
+    background: #f8f9fa;
+    padding: 20px 25px;
+    border-top: 1px solid #e9ecef;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.ai-assistant-field {
+    margin-bottom: 20px;
+}
+
+.ai-assistant-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #23282d;
+    font-size: 14px;
+}
+
+.ai-assistant-field input[type="text"],
+.ai-assistant-field textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.ai-assistant-field input[type="text"]:focus,
+.ai-assistant-field textarea:focus {
+    outline: none;
+    border-color: #0073aa;
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.2);
+}
+
+.ai-assistant-field textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.ai-assistant-field-hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #666;
+    line-height: 1.4;
+}
+
+.ai-assistant-field-warning {
+    border-color: #dc3232 !important;
+    box-shadow: 0 0 0 2px rgba(220, 50, 50, 0.2) !important;
+}
+
+.ai-assistant-field-warning + .ai-assistant-field-hint {
+    color: #dc3232;
+    font-weight: 500;
+}
+
+/* Стили для кнопок в модальном окне */
+.ai-assistant-modal-footer .button {
+    border-radius: 4px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.ai-assistant-modal-footer .button-primary {
+    background: #0073aa;
+    border-color: #0073aa;
+    color: #fff;
+}
+
+.ai-assistant-modal-footer .button-primary:hover:not(:disabled) {
+    background: #005a87;
+    border-color: #005a87;
+}
+
+.ai-assistant-modal-footer .button-primary:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.ai-assistant-modal-footer .button:not(.button-primary) {
+    background: #fff;
+    border-color: #ddd;
+    color: #555;
+}
+
+.ai-assistant-modal-footer .button:not(.button-primary):hover {
+    background: #f8f9fa;
+    border-color: #aaa;
+}
+
+/* Адаптивность для модального окна */
+@media screen and (max-width: 768px) {
+    .ai-assistant-modal-content {
+        margin: 2% auto;
+        width: 95%;
+        max-height: 95vh;
+    }
+    
+    .ai-assistant-modal-header,
+    .ai-assistant-modal-body,
+    .ai-assistant-modal-footer {
+        padding: 15px 20px;
+    }
+    
+    .ai-assistant-modal-footer {
+        flex-direction: column;
+    }
+    
+    .ai-assistant-modal-footer .button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .ai-assistant-modal-footer .button:last-child {
+        margin-bottom: 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ai-assistant-modal-content {
+        margin: 1% auto;
+        width: 98%;
+        border-radius: 4px;
+    }
+    
+    .ai-assistant-modal-header h3 {
+        font-size: 16px;
+    }
+    
+    .ai-assistant-field input[type="text"],
+    .ai-assistant-field textarea {
+        padding: 8px 10px;
+        font-size: 16px; /* Предотвращает zoom на iOS */
+    }
+}
+
+/* Дополнительные улучшения для UX */
+.ai-assistant-modal-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.ai-assistant-modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.ai-assistant-modal-body::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.ai-assistant-modal-body::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+/* Стили для индикаторов длины текста */
+#title-length,
+#description-length {
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: #f0f0f0;
+}
+
+.ai-assistant-field-warning + .ai-assistant-field-hint #title-length,
+.ai-assistant-field-warning + .ai-assistant-field-hint #description-length {
+    background: #dc3232;
+    color: #fff;
+}

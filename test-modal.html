@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест модального окна AI Assistant</title>
+    <link rel="stylesheet" href="assets/css/admin-style.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 40px;
+            background: #f1f1f1;
+        }
+        .test-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            max-width: 800px;
+        }
+        .test-button {
+            background: #0073aa;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .test-button:hover {
+            background: #005a87;
+        }
+        .dashicons {
+            font-family: dashicons;
+            display: inline-block;
+            line-height: 1;
+            font-weight: normal;
+            font-style: normal;
+            speak: none;
+            text-decoration: inherit;
+            text-transform: none;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            vertical-align: top;
+        }
+        .dashicons-yes-alt:before {
+            content: "\f147";
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Тест модального окна AI Assistant</h1>
+        <p>Этот файл позволяет протестировать функциональность модального окна для редактирования SEO-данных.</p>
+        
+        <h2>Тестовые кнопки:</h2>
+        <button class="test-button" onclick="showTestModal()">Показать модальное окно</button>
+        <button class="test-button" onclick="testValidation()">Тест валидации</button>
+        <button class="test-button" onclick="testResponsive()">Тест адаптивности</button>
+        
+        <h2>Описание функций:</h2>
+        <ul>
+            <li><strong>Новая логика:</strong> Генерация → Модальное окно → Ручное сохранение</li>
+            <li><strong>Модальное окно:</strong> Отображение сгенерированных SEO-данных для редактирования</li>
+            <li><strong>Валидация:</strong> Проверка длины заголовка (60 символов) и описания (160 символов)</li>
+            <li><strong>Счетчики:</strong> Динамическое обновление количества символов</li>
+            <li><strong>Сохранение:</strong> Происходит только после нажатия кнопки "Сохранить"</li>
+            <li><strong>Адаптивность:</strong> Корректное отображение на мобильных устройствах</li>
+            <li><strong>Анимации:</strong> Плавное появление и скрытие модального окна</li>
+        </ul>
+        
+        <h2>Архитектура:</h2>
+        <pre>
+Frontend (admin-script.js):
+├── showSeoDataModal() - создание и отображение модального окна
+├── setupModalEventHandlers() - настройка обработчиков событий
+├── saveSeoData() - отправка AJAX запроса для сохранения
+├── closeModal() - закрытие модального окна
+└── updatePostStatus() - обновление статуса в списке записей
+
+Backend (ai-assistant.php):
+├── ajax_save_seo_data() - AJAX обработчик сохранения
+├── Валидация nonce и прав доступа
+├── Санитизация входящих данных
+├── Сохранение в мета-поля Yoast SEO
+└── Применение хуков для расширяемости
+        </pre>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Эмуляция WordPress AJAX объекта
+        var aiAssistant = {
+            ajaxurl: '/wp-admin/admin-ajax.php',
+            nonce: 'test_nonce_12345',
+            strings: {
+                generation_success: 'SEO-данные успешно сгенерированы',
+                optimized: 'Оптимизировано'
+            }
+        };
+
+        // Тестовая функция для показа модального окна
+        function showTestModal() {
+            var testData = {
+                seo_title: 'Пример SEO заголовка для тестирования модального окна',
+                meta_description: 'Это пример мета-описания для тестирования функциональности модального окна. Здесь можно увидеть, как работает счетчик символов.',
+                focus_keyword: 'тестовое ключевое слово'
+            };
+            
+            showSeoDataModal(testData, 123);
+        }
+
+        // Тестовая функция для валидации
+        function testValidation() {
+            var longTitle = 'Это очень длинный SEO заголовок, который превышает рекомендуемую длину в 60 символов и должен показать предупреждение';
+            var longDescription = 'Это очень длинное мета-описание, которое значительно превышает рекомендуемую длину в 160 символов. Оно должно показать предупреждение о превышении лимита символов и изменить цвет поля на красный для привлечения внимания пользователя.';
+            
+            var testData = {
+                seo_title: longTitle,
+                meta_description: longDescription,
+                focus_keyword: 'тест валидации'
+            };
+            
+            showSeoDataModal(testData, 456);
+        }
+
+        // Тестовая функция для адаптивности
+        function testResponsive() {
+            // Эмуляция мобильного устройства
+            document.body.style.width = '320px';
+            document.body.style.margin = '0';
+            
+            var testData = {
+                seo_title: 'Мобильный тест',
+                meta_description: 'Тест адаптивности модального окна на мобильных устройствах.',
+                focus_keyword: 'мобильный'
+            };
+            
+            showSeoDataModal(testData, 789);
+            
+            // Возвращаем нормальную ширину через 10 секунд
+            setTimeout(() => {
+                document.body.style.width = '';
+                document.body.style.margin = '40px';
+            }, 10000);
+        }
+
+        // Вспомогательная функция для escape HTML
+        function escapeHtml(text) {
+            if (!text) return '';
+            var map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Имитация функций из admin-script.js
+        function showSeoDataModal(data, postId) {
+            // Создаем модальное окно
+            var modalHtml = '<div id="ai-assistant-modal" class="ai-assistant-modal">';
+            modalHtml += '<div class="ai-assistant-modal-content">';
+            modalHtml += '<div class="ai-assistant-modal-header">';
+            modalHtml += '<h3>Сгенерированные SEO-данные</h3>';
+            modalHtml += '<span class="ai-assistant-modal-close">&times;</span>';
+            modalHtml += '</div>';
+            modalHtml += '<div class="ai-assistant-modal-body">';
+            modalHtml += '<div class="ai-assistant-modal-notice">Проверьте и отредактируйте данные перед сохранением:</div>';
+            modalHtml += '<form id="ai-assistant-seo-form">';
+            
+            // Поле для SEO заголовка
+            modalHtml += '<div class="ai-assistant-field">';
+            modalHtml += '<label for="seo-title">SEO заголовок:</label>';
+            modalHtml += '<input type="text" id="seo-title" name="seo_title" value="' + escapeHtml(data.seo_title || '') + '" maxlength="60">';
+            modalHtml += '<div class="ai-assistant-field-hint">Рекомендуемая длина: до 60 символов. Текущая: <span id="title-length">' + (data.seo_title ? data.seo_title.length : 0) + '</span></div>';
+            modalHtml += '</div>';
+            
+            // Поле для мета-описания
+            modalHtml += '<div class="ai-assistant-field">';
+            modalHtml += '<label for="meta-description">Мета-описание:</label>';
+            modalHtml += '<textarea id="meta-description" name="meta_description" rows="4" maxlength="160">' + escapeHtml(data.meta_description || '') + '</textarea>';
+            modalHtml += '<div class="ai-assistant-field-hint">Рекомендуемая длина: до 160 символов. Текущая: <span id="description-length">' + (data.meta_description ? data.meta_description.length : 0) + '</span></div>';
+            modalHtml += '</div>';
+            
+            // Поле для ключевого слова
+            modalHtml += '<div class="ai-assistant-field">';
+            modalHtml += '<label for="focus-keyword">Фокусное ключевое слово:</label>';
+            modalHtml += '<input type="text" id="focus-keyword" name="focus_keyword" value="' + escapeHtml(data.focus_keyword || '') + '">';
+            modalHtml += '<div class="ai-assistant-field-hint">Основное ключевое слово для оптимизации страницы</div>';
+            modalHtml += '</div>';
+            
+            modalHtml += '</form>';
+            modalHtml += '</div>';
+            modalHtml += '<div class="ai-assistant-modal-footer">';
+            modalHtml += '<button type="button" id="save-seo-data" class="button button-primary">Сохранить</button>';
+            modalHtml += '<button type="button" id="cancel-seo-edit" class="button">Отмена</button>';
+            modalHtml += '</div>';
+            modalHtml += '</div>';
+            modalHtml += '</div>';
+            
+            // Добавляем модальное окно в DOM
+            $('body').append(modalHtml);
+            var modal = $('#ai-assistant-modal');
+            
+            // Показываем модальное окно
+            modal.fadeIn(300);
+            
+            // Обработчики событий для модального окна
+            setupModalEventHandlers(modal, postId);
+            
+            // Фокус на первое поле
+            $('#seo-title').focus();
+        }
+
+        function setupModalEventHandlers(modal, postId) {
+            // Закрытие модального окна
+            modal.find('.ai-assistant-modal-close, #cancel-seo-edit').on('click', function() {
+                closeModal(modal);
+            });
+            
+            // Закрытие по клику вне модального окна
+            modal.on('click', function(e) {
+                if (e.target === modal[0]) {
+                    closeModal(modal);
+                }
+            });
+            
+            // Закрытие по Escape
+            $(document).on('keydown.ai-assistant-modal', function(e) {
+                if (e.keyCode === 27) { // Escape
+                    closeModal(modal);
+                }
+            });
+            
+            // Обновление счетчиков символов
+            $('#seo-title').on('input', function() {
+                var length = $(this).val().length;
+                $('#title-length').text(length);
+                $(this).toggleClass('ai-assistant-field-warning', length > 60);
+            });
+            
+            $('#meta-description').on('input', function() {
+                var length = $(this).val().length;
+                $('#description-length').text(length);
+                $(this).toggleClass('ai-assistant-field-warning', length > 160);
+            });
+            
+            // Сохранение данных (тестовая версия)
+            $('#save-seo-data').on('click', function() {
+                saveSeoDataTest(modal, postId);
+            });
+            
+            // Сохранение по Enter в полях ввода
+            modal.find('input').on('keypress', function(e) {
+                if (e.which === 13) { // Enter
+                    saveSeoDataTest(modal, postId);
+                }
+            });
+        }
+
+        function saveSeoDataTest(modal, postId) {
+            var saveButton = $('#save-seo-data');
+            var originalText = saveButton.text();
+            
+            // Собираем данные из формы
+            var seoData = {
+                seo_title: $('#seo-title').val(),
+                meta_description: $('#meta-description').val(),
+                focus_keyword: $('#focus-keyword').val()
+            };
+            
+            // Валидация
+            if (!seoData.seo_title.trim()) {
+                alert('SEO заголовок не может быть пустым');
+                $('#seo-title').focus();
+                return;
+            }
+            
+            // Блокируем кнопку сохранения
+            saveButton.prop('disabled', true).text('Сохранение...');
+            
+            // Имитация AJAX запроса
+            setTimeout(function() {
+                alert('Тестовое сохранение успешно!\n\nPost ID: ' + postId + '\nSEO Title: ' + seoData.seo_title + '\nMeta Description: ' + seoData.meta_description + '\nFocus Keyword: ' + seoData.focus_keyword);
+                closeModal(modal);
+                saveButton.prop('disabled', false).text(originalText);
+            }, 1000);
+        }
+
+        function closeModal(modal) {
+            modal.fadeOut(300, function() {
+                modal.remove();
+                $(document).off('keydown.ai-assistant-modal');
+            });
+        }
+
+        function showNotification(message, type) {
+            alert(type.toUpperCase() + ': ' + message);
+        }
+    </script>
+</body>
+</html>

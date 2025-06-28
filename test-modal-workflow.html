@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест рабочего процесса AI Assistant</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .workflow-step {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .step-number {
+            display: inline-block;
+            background: #0073aa;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .step-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .step-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .code-block {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        .success {
+            color: #46b450;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3232;
+            font-weight: bold;
+        }
+        .info {
+            color: #0073aa;
+            font-weight: bold;
+        }
+        .workflow-diagram {
+            background: #fff;
+            border: 2px solid #0073aa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .arrow {
+            font-size: 24px;
+            color: #0073aa;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Тест рабочего процесса AI Assistant</h1>
+    <p>Эта страница демонстрирует правильный рабочий процесс плагина AI Assistant с модальным окном.</p>
+
+    <div class="workflow-diagram">
+        <h2>📋 Схема правильного рабочего процесса</h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 5px; flex: 1; min-width: 200px;">
+                <strong>1. Нажатие кнопки</strong><br>
+                "Сгенерировать SEO"
+            </div>
+            <div class="arrow">→</div>
+            <div style="background: #fff3e0; padding: 15px; border-radius: 8px; margin: 5px; flex: 1; min-width: 200px;">
+                <strong>2. AJAX запрос</strong><br>
+                Генерация через OpenAI
+            </div>
+            <div class="arrow">→</div>
+            <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin: 5px; flex: 1; min-width: 200px;">
+                <strong>3. Модальное окно</strong><br>
+                Показ результата
+            </div>
+            <div class="arrow">→</div>
+            <div style="background: #fce4ec; padding: 15px; border-radius: 8px; margin: 5px; flex: 1; min-width: 200px;">
+                <strong>4. Редактирование</strong><br>
+                Пользователь проверяет
+            </div>
+            <div class="arrow">→</div>
+            <div style="background: #f3e5f5; padding: 15px; border-radius: 8px; margin: 5px; flex: 1; min-width: 200px;">
+                <strong>5. Сохранение</strong><br>
+                После подтверждения
+            </div>
+        </div>
+    </div>
+
+    <div class="workflow-step">
+        <div class="step-title">
+            <span class="step-number">1</span>
+            Нажатие кнопки "Сгенерировать SEO"
+        </div>
+        <div class="step-description">Пользователь видит кнопку в колонке AI Assistant и нажимает на неё</div>
+        <div class="code-block">
+ФРОНТЕНД: $('.generate-seo-btn').on('click', function() {
+    // Показываем индикатор загрузки
+    button.addClass('generating');
+    button.html('⏳ Генерация...');
+    
+    // Отправляем AJAX запрос
+    $.ajax({
+        action: 'ai_assistant_generate_seo',
+        post_id: postId,
+        nonce: nonce
+    });
+});
+        </div>
+        <p class="info">✅ Статус: Кнопка заблокирована, показан индикатор загрузки</p>
+    </div>
+
+    <div class="workflow-step">
+        <div class="step-title">
+            <span class="step-number">2</span>
+            AJAX запрос к серверу
+        </div>
+        <div class="step-description">Сервер получает запрос и генерирует SEO-данные через OpenAI API</div>
+        <div class="code-block">
+БЭКЕНД: public function generate_seo_data() {
+    // Валидация прав и данных
+    check_ajax_referer('ai_assistant_nonce', 'nonce');
+    
+    // Генерация через OpenAI
+    $seo_data = $this->generate_seo_with_context($context, $api_key, $post_type);
+    
+    // ВАЖНО: НЕ сохраняем данные!
+    wp_send_json_success(array(
+        'data' => $seo_data['data'],
+        'auto_saved' => false  // Данные НЕ сохранены
+    ));
+}
+        </div>
+        <p class="success">✅ Статус: Данные сгенерированы, но НЕ сохранены автоматически</p>
+    </div>
+
+    <div class="workflow-step">
+        <div class="step-title">
+            <span class="step-number">3</span>
+            Показ модального окна
+        </div>
+        <div class="step-description">JavaScript получает ответ и сразу показывает модальное окно с данными</div>
+        <div class="code-block">
+ФРОНТЕНД: success: function(response) {
+    if (response.success) {
+        // Восстанавливаем кнопку
+        restoreButton(button, loadingDiv, originalButtonText);
+        
+        // Показываем уведомление
+        showNotification('SEO-данные сгенерированы! Отредактируйте и сохраните их.', 'success');
+        
+        // СРАЗУ показываем модальное окно
+        showSeoDataModal(response.data.data, postId);
+    }
+}
+        </div>
+        <p class="info">✅ Статус: Модальное окно открыто, данные готовы к редактированию</p>
+    </div>
+
+    <div class="workflow-step">
+        <div class="step-title">
+            <span class="step-number">4</span>
+            Редактирование в модальном окне
+        </div>
+        <div class="step-description">Пользователь видит предупреждение и может отредактировать все поля</div>
+        <div class="code-block">
+МОДАЛЬНОЕ ОКНО:
+┌─────────────────────────────────────┐
+│ Сгенерированные SEO-данные          │
+│                                     │
+│ ⚠️ Проверьте и отредактируйте       │
+│ данные перед сохранением            │
+│                                     │
+│ SEO заголовок: [________________]   │
+│ Мета-описание: [________________]   │
+│ Ключевое слово: [______________]    │
+│                                     │
+│     [Сохранить]    [Отмена]         │
+└─────────────────────────────────────┘
+        </div>
+        <p class="info">✅ Статус: Пользователь может редактировать поля, видит счетчики символов</p>
+    </div>
+
+    <div class="workflow-step">
+        <div class="step-title">
+            <span class="step-number">5</span>
+            Сохранение после подтверждения
+        </div>
+        <div class="step-description">Только после нажатия "Сохранить" данные отправляются на сервер</div>
+        <div class="code-block">
+ФРОНТЕНД: $('#save-seo-data').on('click', function() {
+    // Собираем данные из формы
+    var seoData = {
+        seo_title: $('#seo-title').val(),
+        meta_description: $('#meta-description').val(),
+        focus_keyword: $('#focus-keyword').val()
+    };
+    
+    // Отдельный AJAX запрос для сохранения
+    $.ajax({
+        action: 'ai_assistant_save_seo_data',
+        post_id: postId,
+        seo_data: seoData
+    });
+});
+
+БЭКЕНД: public function ajax_save_seo_data() {
+    // Валидация и сохранение в Yoast SEO поля
+    update_post_meta($post_id, '_yoast_wpseo_title', $seo_title);
+    update_post_meta($post_id, '_yoast_wpseo_metadesc', $meta_description);
+    update_post_meta($post_id, '_yoast_wpseo_focuskw', $focus_keyword);
+    
+    // Обновляем статус записи
+    update_post_meta($post_id, '_ai_assistant_optimized', 'manual');
+}
+        </div>
+        <p class="success">✅ Статус: Данные сохранены в WordPress, статус записи обновлен</p>
+    </div>
+
+    <div class="workflow-step">
+        <div class="step-title">
+            <span class="step-number">6</span>
+            Обновление интерфейса
+        </div>
+        <div class="step-description">После успешного сохранения обновляется статус в списке записей</div>
+        <div class="code-block">
+ФРОНТЕНД: success: function(response) {
+    if (response.success) {
+        showNotification('SEO-данные успешно сохранены! Запись оптимизирована.', 'success');
+        closeModal(modal);
+        
+        // Обновляем статус в списке записей
+        updatePostStatus(postId, 'optimized');
+        // Кнопка "Сгенерировать SEO" меняется на "✅ Оптимизировано"
+    }
+}
+        </div>
+        <p class="success">✅ Статус: Процесс завершен, запись помечена как оптимизированная</p>
+    </div>
+
+    <div style="background: #fff; border: 2px solid #46b450; border-radius: 8px; padding: 20px; margin: 20px 0;">
+        <h2>🎉 Процесс завершен успешно!</h2>
+        <p><strong>Ключевые особенности реализации:</strong></p>
+        <ul>
+            <li>✅ <strong>Нет автоматического сохранения</strong> - данные сохраняются только после подтверждения</li>
+            <li>✅ <strong>Модальное окно появляется сразу</strong> после генерации</li>
+            <li>✅ <strong>Пользователь видит предупреждение</strong> о необходимости проверки</li>
+            <li>✅ <strong>Два разных AJAX обработчика</strong> - для генерации и сохранения</li>
+            <li>✅ <strong>Валидация и счетчики символов</strong> в модальном окне</li>
+            <li>✅ <strong>Обновление статуса</strong> после сохранения</li>
+        </ul>
+    </div>
+
+    <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 15px; margin: 20px 0;">
+        <h3>🧪 Как протестировать:</h3>
+        <ol>
+            <li>Перейдите в админку WordPress → Записи → Все записи</li>
+            <li>Найдите запись без SEO-данных</li>
+            <li>Нажмите кнопку "Сгенерировать SEO" в колонке AI Assistant</li>
+            <li>Дождитесь генерации (кнопка заблокирована, показывается индикатор)</li>
+            <li><strong>Проверьте:</strong> появилось ли модальное окно сразу после генерации?</li>
+            <li><strong>Проверьте:</strong> есть ли предупреждение "Проверьте и отредактируйте данные"?</li>
+            <li>Отредактируйте поля при необходимости</li>
+            <li>Нажмите "Сохранить"</li>
+            <li><strong>Проверьте:</strong> обновился ли статус записи на "Оптимизировано"?</li>
+        </ol>
+    </div>
+
+    <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; padding: 15px; margin: 20px 0;">
+        <h3>🚨 Признаки неправильной работы:</h3>
+        <ul>
+            <li>❌ Данные сохраняются автоматически БЕЗ модального окна</li>
+            <li>❌ Модальное окно появляется ПОСЛЕ сохранения</li>
+            <li>❌ Нет предупреждения о необходимости проверки данных</li>
+            <li>❌ Статус записи меняется ДО подтверждения пользователя</li>
+            <li>❌ Модальное окно не открывается вообще</li>
+        </ul>
+    </div>
+
+    <div style="background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 8px; padding: 15px; margin: 20px 0;">
+        <h3>🔧 Отладка:</h3>
+        <p>Если что-то работает неправильно:</p>
+        <ol>
+            <li>Откройте консоль браузера (F12) → вкладка Console</li>
+            <li>Откройте вкладку Network для отслеживания AJAX запросов</li>
+            <li>Проверьте логи WordPress в <code>/wp-content/debug.log</code></li>
+            <li>Ищите сообщения вида: <code>AI Assistant: SEO data generated successfully for post 123 (ready for manual save)</code></li>
+        </ol>
+    </div>
+
+</body>
+</html>
